@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
 
-import Home from './home';
-import Weapons from './weapons';
-import Cart from './cart';
-
-import './App.css';
+import Home from '../home';
+import Weapons from '../weapons';
+import Cart from '../cart';
 
 class App extends Component {
   render() {
