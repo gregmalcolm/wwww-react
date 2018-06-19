@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 
-import WithLoading from './with-loading';
+import WithLoading from './WithLoading';
+import Loading from './loading';
 import WeaponsList from './weapons-list';
 
-const ListWithLoading = WithLoading(WeaponsList);
+const ListWithLoading = WithLoading(Loading, WeaponsList);
 
 class Weapons extends Component {
     constructor() {
