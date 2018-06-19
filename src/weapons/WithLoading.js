@@ -8,7 +8,9 @@ export default (Loading, Loaded) => {
             )
         } else {
             return (
-                <Loaded {...props}/>
+                <div>
+                    <Loaded {...props}/>
+                </div>
             )
         }
     }

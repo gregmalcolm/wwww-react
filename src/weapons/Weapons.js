@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 
 import WithLoading from './WithLoading';
 import Loading from './loading';
-import WeaponsList from './weapons-list';
+import WeaponResults from './weapon-results';
 
-const ListWithLoading = WithLoading(Loading, WeaponsList);
+import WeaponModel from './weapon-model';
+
+const WeaponResultsWithLoading = WithLoading(Loading, WeaponResults);
 
 class Weapons extends Component {
     constructor() {
@@ -12,28 +14,41 @@ class Weapons extends Component {
 
         this.state = {
             loading: true,
-            weapons: {}
+            weapons: []
         }
     }
 
     async _fetchWeapons(params) {
         //const apiParams = this._buildApiParams(params);
         //const response = await fetch(`/api/weapons?${apiParams}`);
-        const response = await fetch(`/api/weapons`);
+        return await fetch(`/api/weapons`);
+    }
 
-        return response.json();
+    _readWeapons(weapons) {
+        return weapons.map(weapon => { 
+            return new WeaponModel({
+                ...weapon.attributes,
+                id: weapon.id
+            });
+        })
     }
 
     componentDidMount() {
         this._fetchWeapons()
+        .then(response => {
+            return response.json();
+        })
         .then(results => {
-            this.setState({loading: false, weapons: results});
+            this.setState({
+                loading: false, 
+                weapons: this._readWeapons(results.data)
+            });
         })
     }
 
     render() {
         return (
-            <ListWithLoading 
+            <WeaponResultsWithLoading 
                 isLoading={this.state.loading}
                 weapons={this.state.weapons}/>
         )
