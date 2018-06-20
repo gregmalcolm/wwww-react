@@ -22,7 +22,7 @@ class Weapons extends Component {
     }
 
     async _fetchWeapons(params) {
-        const apiParams = this._buildApiParams(params);
+        const apiParams = this._buildApiParams();
         return await fetch(`/api/weapons?${apiParams}`);
     }
 
@@ -35,7 +35,9 @@ class Weapons extends Component {
         })
     }
 
-    _buildApiParams(params) {
+    _buildApiParams() {
+        const qs = require('query-string');
+        const params = qs.parse(window.location.search);
         const query = [];
         if (params.q) {
             query.push(`like_name=${params.q}`);
@@ -47,7 +49,7 @@ class Weapons extends Component {
     }    
 
     componentDidMount() {
-        this._fetchWeapons({})
+        this._fetchWeapons()
         .then(response => {
             return response.json();
         })
