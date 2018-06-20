@@ -37,7 +37,6 @@ const WeaponResultItem = ({weapon}) => (
     </li>
 )
 
-
 WeaponResultItem.propTypes = {
     weapons: PropTypes.array
 }

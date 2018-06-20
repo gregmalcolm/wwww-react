@@ -1,3 +1,7 @@
-import Cart from './Cart'
+import React from 'react';
 
-export default Cart;
+export default () => (
+    <div>
+        <h2>Cart</h2>
+    </div>
+);

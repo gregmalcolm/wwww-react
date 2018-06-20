@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types'
 import React from 'react';
-import WeaponResultItem from './weapon-result-item';
+import WeaponResultItem from './result-item';
+
+import './styles.css';
 
 const WeaponResults = ({weapons=[]}) => (
     <section className="weapon-results">
