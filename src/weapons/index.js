@@ -22,9 +22,8 @@ class Weapons extends Component {
     }
 
     async _fetchWeapons(params) {
-        //const apiParams = this._buildApiParams(params);
-        //const response = await fetch(`/api/weapons?${apiParams}`);
-        return await fetch(`/api/weapons`);
+        const apiParams = this._buildApiParams(params);
+        return await fetch(`/api/weapons?${apiParams}`);
     }
 
     _readWeapons(weapons) {
@@ -36,8 +35,19 @@ class Weapons extends Component {
         })
     }
 
+    _buildApiParams(params) {
+        const query = [];
+        if (params.q) {
+            query.push(`like_name=${params.q}`);
+        }
+        if (params.page) {
+            query.push(`page[number]=${params.page}`);
+        }
+        return query.join("&");
+    }    
+
     componentDidMount() {
-        this._fetchWeapons()
+        this._fetchWeapons({})
         .then(response => {
             return response.json();
         })
