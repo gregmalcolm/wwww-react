@@ -7,7 +7,6 @@ import WeaponResults from './results';
 import WeaponModel from './weapon-model';
 
 import './styles.css'
-import './weapons-paging.css';
 
 const WeaponResultsWithLoading = WithLoading(Loading, WeaponResults);
 
@@ -17,7 +16,8 @@ class Weapons extends Component {
 
         this.state = {
             loading: true,
-            weapons: []
+            weapons: [],
+            paginationInfo: {}
         }
     }
 
@@ -35,6 +35,17 @@ class Weapons extends Component {
         })
     }
 
+    _readPaginationInfo(links) {
+        const selfUrl=decodeURIComponent(links.self);
+        const lastUrl=decodeURIComponent(links.last);
+        return {
+            hasPrev: !!links.prev,
+            hasNext: !!links.next,
+            page: this._extractQueryParamValue(selfUrl, "page\\[number\\]") || 1,
+            numOfPages: this._extractQueryParamValue(lastUrl, "page\\[number\\]") || 1
+        }
+    }
+
     _buildApiParams() {
         const qs = require('query-string');
         const params = qs.parse(window.location.search);
@@ -46,7 +57,20 @@ class Weapons extends Component {
             query.push(`page[number]=${params.page}`);
         }
         return query.join("&");
-    }    
+    }
+
+    _extractQueryParamValue(url, key) {
+        let value = null;
+
+        if (url) {
+            const pattern = new RegExp(key + "=(\\d*)");
+            const matches = url.match(pattern);
+            value = (matches && matches.length >= 2) ? parseInt(matches[1], 10) : null;
+        }
+
+        return value;
+    }
+    
 
     componentDidMount() {
         this._fetchWeapons()
@@ -54,9 +78,11 @@ class Weapons extends Component {
             return response.json();
         })
         .then(results => {
+            const paginationInfo = this._readPaginationInfo(results.links);
             this.setState({
                 loading: false, 
-                weapons: this._readWeapons(results.data)
+                weapons: this._readWeapons(results.data),
+                paginationInfo: paginationInfo
             });
         })
     }
@@ -65,7 +91,8 @@ class Weapons extends Component {
         return (
             <WeaponResultsWithLoading 
                 isLoading={this.state.loading}
-                weapons={this.state.weapons}/>
+                weapons={this.state.weapons}
+                paginationInfo={this.state.paginationInfo}/>
         )
     }
 };

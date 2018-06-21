@@ -19,6 +19,10 @@ button {
   cursor: pointer;
 }
 
+button:disabled {
+  cursor: default;
+}
+
 .information {
   margin: 100px 0;
   font-size: 28px;
@@ -52,12 +56,12 @@ button {
 }
 
 @keyframes bounce {
-from {
-  transform: translateY(0px);
-}
-to {
-  transform: translateY(-25px);
-}
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-25px);
+  }
 }
 
 @media (min-width: 451px) {

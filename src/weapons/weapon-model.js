@@ -1,7 +1,7 @@
 import imageManifest from './weapons-manifest.json'
 
 class WeaponModel {
-    constructor(attr) {
+    constructor(attr={}) {
         this._id = attr.id;
         this._name = attr.name;
         this._category = attr.category;
