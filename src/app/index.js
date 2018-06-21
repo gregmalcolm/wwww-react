@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Switch, Route, Link } from 'react-router-dom';
 
 import Home from '../home';
 import Weapons from '../weapons';
 import Cart from '../cart';
+import Errors from '../errors';
 
 import './styles.css';
 import './head-spin.css'
@@ -49,9 +50,12 @@ class App extends Component {
                 </ul>
                 </nav>
     
-                <Route path="/" exact component={Home}/>
-                <Route path="/weapons" component={Weapons}/>
-                <Route path="/cart" component={Cart}/>
+                <Switch>
+                    <Route path="/" exact component={Home}/>
+                    <Route path="/weapons" component={Weapons}/>
+                    <Route path="/cart" component={Cart}/>
+                    <Route component={Errors} />
+                </Switch>
             </div>
         )
     }
