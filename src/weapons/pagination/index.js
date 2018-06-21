@@ -3,10 +3,10 @@ import React  from 'react';
 
 import './styles.css';
 
-const WeaponPagination = ({paginationInfo={}}) => {
+const WeaponPagination = ({paginationInfo, location, onChangePage}) => {
     const query = () => {
         const qs = require('query-string');
-        return qs.parse(window.location.search) || {};
+        return qs.parse(location.search) || {};
     };
 
     // const pageLink = page => {
@@ -17,14 +17,21 @@ const WeaponPagination = ({paginationInfo={}}) => {
     //         `${key}=${val}`
     //     ).join('&');
 
-    //     return `${window.location.pathname}?${anchor}`;
+    //     return `?${anchor}`;
     // };
 
-    const searchText = query.q || "";   
-    const page = query.page || 1;
+    const searchText = query().q || "";   
+
+    const page = paginationInfo.page || 1;
 
     const btnPrevDisabled = !paginationInfo.hasPrev ? "btn-disabled" : "";
     const btnNextDisabled = !paginationInfo.hasNext ? "btn-disabled" : "";
+
+    // const onClick = (pageNo) => {
+    //     history.push(location.pathname + pageLink(pageNo))
+    //     //location.search=pageLink(pageNo);
+    //     //location.pathname=location.pathname;
+    // }
 
     return (
         <div className="results-info">
@@ -33,11 +40,15 @@ const WeaponPagination = ({paginationInfo={}}) => {
             </div>
             <div className="btn-group page-buttons">
                 <button className={`btn btn-prev ${btnPrevDisabled}`}
-                    disabled={!paginationInfo.hasPrev}>
+                    disabled={!paginationInfo.hasPrev}
+                    onClick={()=>onChangePage(page - 1)}
+                >
                     <img src="/images/prev.png" alt="prev" />
                 </button>
                 <button className={`btn btn-next ${btnNextDisabled}`} 
-                    disabled={!paginationInfo.hasNext}>
+                    disabled={!paginationInfo.hasNext}
+                    onClick={()=>onChangePage(page + 1)}
+                >
                     <img src="/images/next.png" alt="next" />
                 </button>
             </div>
@@ -46,7 +57,9 @@ const WeaponPagination = ({paginationInfo={}}) => {
     );
 }
 WeaponPagination.propTypes = {
-    paginationInfo: PropTypes.object
+    paginationInfo: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    onChangePage: PropTypes.func.isRequired
 }
 
 export default WeaponPagination;

@@ -19,6 +19,23 @@ class Weapons extends Component {
             weapons: [],
             paginationInfo: {}
         }
+
+        this.changePage = this.changePage.bind(this)
+    }
+
+    _loadWeapons() {
+        this._fetchWeapons()
+        .then(response => {
+            return response.json();
+        })
+        .then(results => {
+            const paginationInfo = this._readPaginationInfo(results.links);
+            this.setState({
+                loading: false, 
+                weapons: this._readWeapons(results.data),
+                paginationInfo: paginationInfo,
+            });
+        })
     }
 
     async _fetchWeapons(params) {
@@ -73,18 +90,12 @@ class Weapons extends Component {
     
 
     componentDidMount() {
-        this._fetchWeapons()
-        .then(response => {
-            return response.json();
-        })
-        .then(results => {
-            const paginationInfo = this._readPaginationInfo(results.links);
-            this.setState({
-                loading: false, 
-                weapons: this._readWeapons(results.data),
-                paginationInfo: paginationInfo
-            });
-        })
+        this._loadWeapons();
+    }
+
+    changePage(pageNo) {
+        this.props.history.push(`/weapons?page=${pageNo}`);
+        this._loadWeapons();
     }
 
     render() {
@@ -92,7 +103,11 @@ class Weapons extends Component {
             <WeaponResultsWithLoading 
                 isLoading={this.state.loading}
                 weapons={this.state.weapons}
-                paginationInfo={this.state.paginationInfo}/>
+                paginationInfo={this.state.paginationInfo}
+                onChangePage={this.changePage}
+                {...this.props}
+            >
+            </WeaponResultsWithLoading>
         )
     }
 };
