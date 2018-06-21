@@ -31,11 +31,13 @@ class Weapons extends Component {
         })
         .then(results => {
             const paginationInfo = this._readPaginationInfo(results.links);
-            this.setState({
-                loading: false, 
-                weapons: this._readWeapons(results.data),
-                paginationInfo: paginationInfo,
-            });
+            if (results.data) {
+                this.setState({
+                    loading: false, 
+                    weapons: this._readWeapons(results.data),
+                    paginationInfo: paginationInfo,
+                });    
+            }
         })
     }
 
