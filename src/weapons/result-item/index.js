@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react';
 
 import './styles.css';
+import './enchanted.css';
 
 const WeaponResultItem = ({weapon}) => (
     <li className={`search-result ${weapon.enchanted ? "enchanted" : ""}`}>

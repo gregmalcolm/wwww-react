@@ -24,6 +24,7 @@ class Weapons extends Component {
     }
 
     _loadWeapons() {
+        this.setState({loading: true});
         this._fetchWeapons()
         .then(response => {
             return response.json();
@@ -64,8 +65,7 @@ class Weapons extends Component {
     }
 
     _buildApiParams() {
-        const qs = require('query-string');
-        const params = qs.parse(window.location.search);
+        const params = this._queryString();
         const query = [];
         if (params.q) {
             query.push(`like_name=${params.q}`);
@@ -87,14 +87,36 @@ class Weapons extends Component {
 
         return value;
     }
-    
+
+    _queryString() {
+        const qs = require('query-string');
+        return qs.parse(this._location().search) || {};
+    };
+
+    _history() {
+        return this.props.history;
+    }
+
+    _location() {
+        return this._history().location;
+    }
 
     componentDidMount() {
         this._loadWeapons();
     }
 
-    changePage(pageNo) {
-        this.props.history.push(`/weapons?page=${pageNo}`);
+    changePage(page) {
+        const qs = this._queryString();
+        qs.page = page;
+
+        const anchor = Object.entries(qs)
+            .map(([key, val]) => 
+                `${key}=${val}`
+            ).join('&');
+        
+        const baseUrl = this._location().pathname;
+
+        this._history().push(`${baseUrl}?${anchor}`);
         this._loadWeapons();
     }
 
