@@ -4,16 +4,21 @@ import React from 'react';
 import './styles.css';
 import './enchanted.css';
 
-const WeaponResultItem = ({weapon}) => (
+const WeaponResultItem = ({weapon, onToggleEnchantment}) => (
     <li className={`search-result ${weapon.enchanted ? "enchanted" : ""}`}>
-    <div className="search-details">
+        <div className="search-details">
             <h3 className="result-details__title-header">
                 {weapon.name}
             </h3>
             <div className="search-result__enchanted">
                 <label>Add enchantment
-                    <input className="enchantment-checkbox" type="checkbox"
-                        checked={weapon.enchanted ? "checked" : ""} />
+                    <input 
+                        className="enchantment-checkbox" 
+                        type="checkbox"
+                        defaultChecked={weapon.enchanted}
+                        onChange={(e) => onToggleEnchantment(e, weapon) }
+                    />
+                        
                 </label>
             </div>
             <img className="search-result__image" 
@@ -39,7 +44,8 @@ const WeaponResultItem = ({weapon}) => (
 )
 
 WeaponResultItem.propTypes = {
-    weapons: PropTypes.array
+    weapon: PropTypes.object.isRequired,
+    onToggleEnchantment: PropTypes.func.isRequired
 }
 
 export default WeaponResultItem;

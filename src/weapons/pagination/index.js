@@ -9,29 +9,12 @@ const WeaponPagination = ({paginationInfo, location, onChangePage}) => {
         return qs.parse(location.search) || {};
     };
 
-    // const pageLink = page => {
-    //     const qs = query();
-    //     qs.page = page;
-
-    //     const anchor = Object.entries(qs).map(([key, val]) => 
-    //         `${key}=${val}`
-    //     ).join('&');
-
-    //     return `?${anchor}`;
-    // };
-
     const searchText = query().q || "";   
 
     const page = paginationInfo.page || 1;
 
     const btnPrevDisabled = !paginationInfo.hasPrev ? "btn-disabled" : "";
     const btnNextDisabled = !paginationInfo.hasNext ? "btn-disabled" : "";
-
-    // const onClick = (pageNo) => {
-    //     history.push(location.pathname + pageLink(pageNo))
-    //     //location.search=pageLink(pageNo);
-    //     //location.pathname=location.pathname;
-    // }
 
     return (
         <div className="results-info">

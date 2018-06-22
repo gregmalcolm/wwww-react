@@ -21,6 +21,7 @@ class Weapons extends Component {
         }
 
         this.changePage = this.changePage.bind(this)
+        this.toggleEnchantment = this.toggleEnchantment.bind(this)
     }
 
     _loadWeapons() {
@@ -122,6 +123,13 @@ class Weapons extends Component {
         this._loadWeapons();
     }
 
+    toggleEnchantment(e, weapon) {
+        let stateWeapon = this.state.weapons.find(w => w.id === weapon.id);
+        stateWeapon.enchanted = e.target.checked;
+
+        this.setState({weapons: this.state.weapons});
+    }
+
     render() {
         return (
             <WeaponResultsWithLoading 
@@ -129,6 +137,7 @@ class Weapons extends Component {
                 weapons={this.state.weapons}
                 paginationInfo={this.state.paginationInfo}
                 onChangePage={this.changePage}
+                onToggleEnchantment={this.toggleEnchantment}
                 {...this.props}
             >
             </WeaponResultsWithLoading>

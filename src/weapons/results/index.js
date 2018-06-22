@@ -7,7 +7,14 @@ import './styles.css';
 
 const WeaponResults = (props) => {
     const {weapons} = props;
-    const renderResults = ({weapons, paginationInfo, location, onChangePage}) => (
+
+    const renderResults = ({
+        weapons, 
+        paginationInfo, 
+        location, 
+        onChangePage, 
+        onToggleEnchantment
+    }) => (
         <section className="weapon-results">
             <header className="weapons-header">
                 <WeaponPagination 
@@ -20,7 +27,8 @@ const WeaponResults = (props) => {
                 { weapons.map(weapon =>
                     <WeaponResultItem 
                         key={weapon.id} 
-                        weapon={weapon}/>
+                        weapon={weapon}
+                        onToggleEnchantment={onToggleEnchantment}/>
                 )}
                 </ul>
             <footer className="weapons-footer">
@@ -51,7 +59,8 @@ WeaponResults.propTypes = {
     weapons: PropTypes.array.isRequired,
     paginationInfo: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
-    onChangePage: PropTypes.func.isRequired
+    onChangePage: PropTypes.func.isRequired,
+    onToggleEnchantment: PropTypes.func.isRequired
 }
 
 export default WeaponResults;
