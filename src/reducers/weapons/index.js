@@ -1,4 +1,4 @@
-const weapons = (state = {}, action={ type: null }) => {
+const weapons = (state = [], action={ type: null }) => {
 };
 
 export default weapons;
