@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
-import WithLoading from './with-loading';
-import Loading from './loading';
-import WeaponResults from './results';
+import WithLoading from '../with-loading';
+import Loading from '../loading';
+import WeaponResults from '../results';
 
-import WeaponModel from './weapon-model';
+import WeaponModel from '../weapon-model';
 
 import './styles.css'
 
