@@ -1,148 +1,136 @@
-import React, { Component } from 'react';
+
+import PropTypes from 'prop-types'
+import React from 'react';
 
 import WithLoading from '../with-loading';
 import Loading from '../loading';
 import WeaponResults from '../results';
 
-import WeaponModel from '../weapon-model';
+import { connect } from 'react-redux';
 
-import './styles.css'
+const ResultsWithLoading = WithLoading(Loading, WeaponResults);
 
-const WeaponResultsWithLoading = WithLoading(Loading, WeaponResults);
+const WeaponResultsWithLoading = ({isLoading, weapons, paginationInfo}) => (
+    <ResultsWithLoading 
+        isLoading={isLoading}
+        weapons={weapons}
+        paginationInfo={paginationInfo}
+        {...this.props}
+    >
+    </ResultsWithLoading>
+);
+WeaponResultsWithLoading.propTypes = {
+    isLoading: PropTypes.bool.isRequired,
+    weapons: PropTypes.array.isRequired,
+    paginationInfo: PropTypes.object.isRequired
+}
 
-class Weapons extends Component {
-    constructor() {
-        super();
-
-        this.state = {
-            loading: true,
-            weapons: [],
-            paginationInfo: {}
-        }
-
-        this.changePage = this.changePage.bind(this)
-        this.toggleEnchantment = this.toggleEnchantment.bind(this)
-    }
-
-    _loadWeapons() {
-        this.setState({loading: true});
-        this._fetchWeapons()
-        .then(response => {
-            return response.json();
-        })
-        .then(results => {
-            const paginationInfo = this._readPaginationInfo(results.links);
-            if (results.data) {
-                this.setState({
-                    loading: false, 
-                    weapons: this._readWeapons(results.data),
-                    paginationInfo: paginationInfo,
-                });    
-            }
-        })
-    }
-
-    async _fetchWeapons(params) {
-        const apiParams = this._buildApiParams();
-        return await fetch(`/api/weapons?${apiParams}`);
-    }
-
-    _readWeapons(weapons) {
-        return weapons.map(weapon => { 
-            return new WeaponModel({
-                ...weapon.attributes,
-                id: weapon.id
-            });
-        })
-    }
-
-    _readPaginationInfo(links) {
-        const selfUrl=decodeURIComponent(links.self);
-        const lastUrl=decodeURIComponent(links.last);
-        return {
-            hasPrev: !!links.prev,
-            hasNext: !!links.next,
-            page: this._extractQueryParamValue(selfUrl, "page\\[number\\]") || 1,
-            numOfPages: this._extractQueryParamValue(lastUrl, "page\\[number\\]") || 1
-        }
-    }
-
-    _buildApiParams() {
-        const params = this._queryString();
-        const query = [];
-        if (params.q) {
-            query.push(`like_name=${params.q}`);
-        }
-        if (params.page) {
-            query.push(`page[number]=${params.page}`);
-        }
-        return query.join("&");
-    }
-
-    _extractQueryParamValue(url, key) {
-        let value = null;
-
-        if (url) {
-            const pattern = new RegExp(key + "=(\\d*)");
-            const matches = url.match(pattern);
-            value = (matches && matches.length >= 2) ? parseInt(matches[1], 10) : null;
-        }
-
-        return value;
-    }
-
-    _queryString() {
-        const qs = require('query-string');
-        return qs.parse(this._location().search) || {};
-    };
-
-    _history() {
-        return this.props.history;
-    }
-
-    _location() {
-        return this._history().location;
-    }
-
-    componentDidMount() {
-        this._loadWeapons();
-    }
-
-    changePage(page) {
-        const qs = this._queryString();
-        qs.page = page;
-
-        const anchor = Object.entries(qs)
-            .map(([key, val]) => 
-                `${key}=${val}`
-            ).join('&');
-        
-        const baseUrl = this._location().pathname;
-
-        this._history().push(`${baseUrl}?${anchor}`);
-        this._loadWeapons();
-    }
-
-    toggleEnchantment(e, weapon) {
-        let stateWeapon = this.state.weapons.find(w => w.id === weapon.id);
-        stateWeapon.enchanted = e.target.checked;
-
-        this.setState({weapons: this.state.weapons});
-    }
-
-    render() {
-        return (
-            <WeaponResultsWithLoading 
-                isLoading={this.state.loading}
-                weapons={this.state.weapons}
-                paginationInfo={this.state.paginationInfo}
-                onChangePage={this.changePage}
-                onToggleEnchantment={this.toggleEnchantment}
-                {...this.props}
-            >
-            </WeaponResultsWithLoading>
-        )
+const mapStateToProps = state => {
+    return {
+        isLoading: state.isLoading,
+        weapons: state.weapons,
+        paginationInfo: state.paginationInfo
     }
 };
 
-export default Weapons;
+const mapDispatchToProps = null;
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(WeaponResultsWithLoading);
+
+//import {  } from '../../../actions/weapons'
+
+
+// const mapStateToProps = state => {
+//     return {
+//       todo: state.todos[0]
+//     }
+//   }
+  
+// const mapDispatchToProps = dispatch => {
+// return {
+//     destroyTodo: () =>
+//     dispatch({
+//         type: 'DESTROY_TODO'
+//     })
+// }
+
+//OLD Color
+// class Color extends Component {
+
+//     componentWillMount() {
+//         this.style = { backgroundColor: "#CCC" }
+//     }
+
+//     shouldComponentUpdate(nextProps) {
+//         const { rating } = this.props
+//         return rating !== nextProps.rating
+//     }
+
+//     componentWillUpdate(nextProps) {
+//         const { title, rating } = this.props
+//         this.style = null
+//         this.refs.title.style.backgroundColor = "red"
+//         this.refs.title.style.color = "white"
+//         alert(`${title}: rating ${rating} -> ${nextProps.rating}`)
+//     }
+
+//     componentDidUpdate(prevProps) {
+//         const { title, rating } = this.props
+//         const status = (rating > prevProps.rating) ? 'better' : 'worse'
+//         console.log(`${title} is getting ${status}`)
+//         this.refs.title.style.backgroundColor = ""
+//         this.refs.title.style.color = "black"
+//     }
+
+//     render() {
+//         const { title, color, rating, onRemove, onRate} = this.props
+//         return (
+//             <section className="color" style={this.style}>
+//                 <h1 ref="title">{title}</h1>
+//                 <button onClick={onRemove}>X</button>
+//                 <div className="color"
+//                      style={{ backgroundColor: color }}>
+//                 </div>
+//                 <div>
+//                     <StarRating starsSelected={rating} onRate={onRate}/>
+//                 </div>
+//             </section>
+//         )
+//     }
+
+// }
+
+
+//New Color
+
+// export const Color = connect(
+//     ({ colors }, { match }) => findById(colors, match.params.id)
+// )(ColorDetails)
+//class Color extends Component {
+//     render() {
+//         const { id, title, color, rating, timestamp, onRemove, onRate, history } = this.props
+//         return (
+//             <section className="color" style={this.style}>
+//                 <h1 ref="title"
+//                     onClick={() => history.push(`/${id}`)}>{title}</h1>
+//                 <button onClick={onRemove}>
+//                     <FaTrash />
+//                 </button>
+//                 <div className="color"
+//                      onClick={() => history.push(`/${id}`)}
+//                      style={{ backgroundColor: color }}>
+//                 </div>
+//                 <TimeAgo timestamp={timestamp} />
+//                 <div>
+//                     <StarRating starsSelected={rating} onRate={onRate}/>
+//                 </div>
+//             </section>
+//         )
+//     }
+
+// }
+
+

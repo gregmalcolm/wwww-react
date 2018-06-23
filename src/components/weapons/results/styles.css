@@ -5,3 +5,13 @@
     flex-direction: row;
     flex-wrap: wrap;
 }
+
+.critical-failure {
+    text-align: center;
+    margin: 100px;
+}
+
+.critical-failure img {
+    box-shadow: -1px 1px 1px 1px #ccc;
+    border-radius:3px;
+}
