@@ -1,10 +1,10 @@
-const queryString = history => {
+const queryString = search => {
     const qs = require('query-string');
-    return qs.parse(history.location.search) || {};
+    return qs.parse(search) || {};
 };
 
-export const buildParams = history => {
-    const params = queryString(history);
+export const buildParams = search => {
+    const params = queryString(search);
     const query = [];
     if (params.q) {
         query.push(`like_name=${params.q}`);

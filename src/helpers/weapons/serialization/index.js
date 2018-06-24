@@ -1,4 +1,4 @@
-import WeaponModel from '../components/weapons/weapon-model'
+import WeaponModel from '../../../components/weapons/weapon-model'
 
 const extractQueryParamValue = (url, key) =>  {
     if (url) {

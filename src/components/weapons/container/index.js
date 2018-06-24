@@ -1,22 +1,19 @@
 
 import PropTypes from 'prop-types'
 import React, {Component} from 'react';
-
-import WithLoading from '../with-loading';
 import { connect } from 'react-redux';
 
+import WithLoading from '../with-loading';
 import Loading from '../loading';
 import WeaponsResults from '../results';
 
-import { fetchWeapons } from '../../../actions/weapons'
-import { buildParams } from '../../../helpers/weapons/ajax'
+import { fetchWeapons, changePage, toggleEnchantment } from '../../../actions/weapons'
 
 const WeaponsResultsWithLoading = WithLoading(Loading, WeaponsResults);
 
 class WeaponsContainer extends Component {
     componentDidMount() {
-        const apiParams = buildParams(this.props.history);
-        this.props.dispatch(fetchWeapons(apiParams));
+        this.props.onFetchWeapons(this.props.history);
     }
 
     render() {
@@ -35,7 +32,10 @@ class WeaponsContainer extends Component {
 WeaponsContainer.propTypes = {
     isLoading: PropTypes.bool.isRequired,
     weapons: PropTypes.array.isRequired,
-    paginationInfo: PropTypes.object.isRequired
+    paginationInfo: PropTypes.object.isRequired,
+    onFetchWeapons: PropTypes.func,
+    onChangePage: PropTypes.func,
+    onToggleEnchantment: PropTypes.func
 }
 
 WeaponsContainer.defaultProps = {
@@ -44,22 +44,29 @@ WeaponsContainer.defaultProps = {
     paginationInfo: {}
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ({isLoading, weapons, paginationInfo}) => {
     return {
-        isLoading: state.isLoading,
-        weapons: state.weapons,
-        paginationInfo: state.paginationInfo
+        isLoading: isLoading,
+        weapons: weapons,
+        paginationInfo: paginationInfo
     }
 };
 
-//const mapDispatchToProps = null;
-
-// export default connect(
-//     mapStateToProps,
-//     mapDispatchToProps
-// )(WeaponsContainer);
+const mapDispatchToProps = dispatch => ({
+    onFetchWeapons(history) { 
+        dispatch(fetchWeapons(history))
+    },
+    onChangePage(page) { 
+        dispatch(changePage(page))
+    },
+    onToggleEnchantment() {
+        dispatch(toggleEnchantment())
+    }
+});
 
 export default connect(
-    mapStateToProps
+    mapStateToProps,
+    mapDispatchToProps
 )(WeaponsContainer);
+
 
