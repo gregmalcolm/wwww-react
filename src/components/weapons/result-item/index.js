@@ -4,7 +4,7 @@ import React from 'react';
 import './styles.css';
 import './enchanted.css';
 
-const WeaponResultItem = ({weapon, onToggleEnchantment}) => (
+const WeaponsResultsItem = ({weapon, onToggleEnchantment}) => (
     <li className={`search-result ${weapon.enchanted ? "enchanted" : ""}`}>
         <div className="search-details">
             <h3 className="result-details__title-header">
@@ -43,11 +43,11 @@ const WeaponResultItem = ({weapon, onToggleEnchantment}) => (
     </li>
 )
 
-WeaponResultItem.propTypes = {
+WeaponsResultsItem.propTypes = {
     weapon: PropTypes.object.isRequired,
     onToggleEnchantment: PropTypes.func.isRequired
 }
 
-export default WeaponResultItem;
+export default WeaponsResultsItem;
 
 

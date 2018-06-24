@@ -4,22 +4,21 @@ import React from 'react';
 
 import WithLoading from '../with-loading';
 import Loading from '../loading';
-import WeaponResults from '../results';
+import WeaponsResults from '../results';
 
 import { connect } from 'react-redux';
 
-const ResultsWithLoading = WithLoading(Loading, WeaponResults);
+const WeaponsResultsWithLoading = WithLoading(Loading, WeaponsResults);
 
-const WeaponResultsWithLoading = ({isLoading, weapons, paginationInfo}) => (
-    <ResultsWithLoading 
+const WeaponsContainer = ({isLoading, weapons, paginationInfo}) => (
+    <WeaponsResultsWithLoading 
         isLoading={isLoading}
         weapons={weapons}
         paginationInfo={paginationInfo}
         {...this.props}
-    >
-    </ResultsWithLoading>
+    />
 );
-WeaponResultsWithLoading.propTypes = {
+WeaponsContainer.propTypes = {
     isLoading: PropTypes.bool.isRequired,
     weapons: PropTypes.array.isRequired,
     paginationInfo: PropTypes.object.isRequired
@@ -38,7 +37,7 @@ const mapDispatchToProps = null;
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(WeaponResultsWithLoading);
+)(WeaponsContainer);
 
 //import {  } from '../../../actions/weapons'
 

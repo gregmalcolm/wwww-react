@@ -3,7 +3,7 @@ import React  from 'react';
 
 import './styles.css';
 
-const WeaponPagination = ({paginationInfo, location, onChangePage}) => {
+const WeaponsPagination = ({paginationInfo, location, onChangePage}) => {
     const query = () => {
         const qs = require('query-string');
         return qs.parse(location.search) || {};
@@ -39,10 +39,10 @@ const WeaponPagination = ({paginationInfo, location, onChangePage}) => {
         </div>
     );
 }
-WeaponPagination.propTypes = {
+WeaponsPagination.propTypes = {
     paginationInfo: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
     onChangePage: PropTypes.func.isRequired
 }
 
-export default WeaponPagination;
+export default WeaponsPagination;

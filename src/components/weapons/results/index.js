@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types'
 import React from 'react';
-import WeaponPagination from '../pagination';
-import WeaponResultItem from '../result-item';
+import WeaponsPagination from '../pagination';
+import WeaponsResultsItem from '../result-item';
 
 import './styles.css';
 
-const WeaponResults = (props) => {
+const WeaponsResults = (props) => {
     const {weapons} = props;
 
     const renderResults = ({
@@ -17,7 +17,7 @@ const WeaponResults = (props) => {
     }) => (
         <section className="weapon-results">
             <header className="weapons-header">
-                <WeaponPagination 
+                <WeaponsPagination 
                     paginationInfo={paginationInfo}                 
                     location={location}
                     onChangePage={onChangePage}
@@ -25,14 +25,14 @@ const WeaponResults = (props) => {
             </header>
             <ul className="weapons-list">
                 { weapons.map(weapon =>
-                    <WeaponResultItem 
+                    <WeaponsResultsItem 
                         key={weapon.id} 
                         weapon={weapon}
                         onToggleEnchantment={onToggleEnchantment}/>
                 )}
                 </ul>
             <footer className="weapons-footer">
-                <WeaponPagination 
+                <WeaponsPagination 
                     paginationInfo={paginationInfo}
                     location={location}
                     onChangePage={onChangePage}
@@ -55,7 +55,7 @@ const WeaponResults = (props) => {
     }
 }
 
-WeaponResults.propTypes = {
+WeaponsResults.propTypes = {
     weapons: PropTypes.array.isRequired,
     paginationInfo: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
@@ -63,4 +63,4 @@ WeaponResults.propTypes = {
     onToggleEnchantment: PropTypes.func.isRequired
 }
 
-export default WeaponResults;
+export default WeaponsResults;

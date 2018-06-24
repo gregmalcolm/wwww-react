@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 
 import WithLoading from '../with-loading';
 import Loading from '../loading';
-import WeaponResults from '../results';
+import WeaponsResults from '../results';
 
 import WeaponModel from '../weapon-model';
 
-const WeaponResultsWithLoading = WithLoading(Loading, WeaponResults);
+const WeaponsResultsWithLoading = WithLoading(Loading, WeaponsResults);
 
 class Weapons extends Component {
     constructor() {
@@ -130,7 +130,7 @@ class Weapons extends Component {
 
     render() {
         return (
-            <WeaponResultsWithLoading 
+            <WeaponsResultsWithLoading 
                 isLoading={this.state.loading}
                 weapons={this.state.weapons}
                 paginationInfo={this.state.paginationInfo}
@@ -138,7 +138,7 @@ class Weapons extends Component {
                 onToggleEnchantment={this.toggleEnchantment}
                 {...this.props}
             >
-            </WeaponResultsWithLoading>
+            </WeaponsResultsWithLoading>
         )
     }
 };
