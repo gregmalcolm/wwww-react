@@ -1,6 +1,6 @@
 
 import PropTypes from 'prop-types'
-import React from 'react';
+import React, {Component} from 'react';
 
 import WithLoading from '../with-loading';
 import Loading from '../loading';
@@ -10,14 +10,27 @@ import { connect } from 'react-redux';
 
 const WeaponsResultsWithLoading = WithLoading(Loading, WeaponsResults);
 
-const WeaponsContainer = ({isLoading, weapons, paginationInfo}) => (
-    <WeaponsResultsWithLoading 
-        isLoading={isLoading}
-        weapons={weapons}
-        paginationInfo={paginationInfo}
-        {...this.props}
-    />
-);
+class WeaponsContainer extends Component {
+    render() {
+        const {isLoading, weapons, paginationInfo} = this.props;
+        
+        return (
+            <WeaponsResultsWithLoading 
+                isLoading={isLoading}
+                weapons={weapons}
+                paginationInfo={paginationInfo}
+                {...this.props}
+            />);
+    }
+}
+//  ({isLoading, weapons, paginationInfo}) => (
+//     <WeaponsResultsWithLoading 
+//         isLoading={isLoading}
+//         weapons={weapons}
+//         paginationInfo={paginationInfo}
+//         {...this.props}
+//     />
+// );
 WeaponsContainer.propTypes = {
     isLoading: PropTypes.bool.isRequired,
     weapons: PropTypes.array.isRequired,
