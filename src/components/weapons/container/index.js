@@ -32,11 +32,15 @@ const mapStateToProps = state => {
     }
 };
 
-const mapDispatchToProps = null;
+//const mapDispatchToProps = null;
+
+// export default connect(
+//     mapStateToProps,
+//     mapDispatchToProps
+// )(WeaponsContainer);
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+    mapStateToProps
 )(WeaponsContainer);
 
 //import {  } from '../../../actions/weapons'

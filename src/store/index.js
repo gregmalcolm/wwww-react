@@ -1,7 +1,15 @@
 
-import { weapons } from "../reducers";
-import { createStore } from "redux";
+import thunk from 'redux-thunk';
 
-const store = createStore(weapons);
+import { createStore, applyMiddleware } from 'redux';
+
+import weaponsReducer from "../reducers/weapons";
+
+const rootReducer = weaponsReducer;
+
+const store = createStore(
+    rootReducer,
+    applyMiddleware(thunk)
+  );
 
 export default store;

@@ -1,4 +1,4 @@
-const weapons = (state = {}, action={ type: null }) => {
+const weaponsReducer = (state = {}, action={ type: null }) => {
     switch (action.type) {
         default:
             return {
@@ -9,4 +9,4 @@ const weapons = (state = {}, action={ type: null }) => {
     }
 };
 
-export default weapons;
+export default weaponsReducer;
