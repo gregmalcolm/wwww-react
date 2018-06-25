@@ -18,10 +18,6 @@ const applyChangedPage = (response) => ({
     links: response.links
 });
 
-const applyToggleEnhancement = (response) => ({
-    type: WeaponsAction.TOGGLE_ENHANCEMENTs
-});
-
 export const fetchWeapons = (history) => dispatch => {
     const params = buildParams(history.location.search);
     return fetchWeaponsAsync(params)
@@ -35,16 +31,8 @@ export const changePage = (history, page) => dispatch => {
         .then(response => dispatch(applyChangedPage(response)));
 };
 
-// toggleEnchantment(e, weapon) {
-//     let stateWeapon = this.state.weapons.find(w => w.id === weapon.id);
-//     stateWeapon.enchanted = e.target.checked;
-
-//     this.setState({weapons: this.state.weapons});
-// }
-
-export const toggleEnchantment = (e, weapon) => dispatch => {
-    let stateWeapon = this.state.weapons.find(w => w.id === weapon.id);
-    stateWeapon.enchanted = e.target.checked;
-    
-    return dispatch(applyToggleEnhancement)
-};
+export const toggleEnchantment = (weaponId, enchanted) => ({
+    type: WeaponsAction.TOGGLE_ENHANCEMENT,
+    weaponId: weaponId,
+    enchanted: enchanted
+})

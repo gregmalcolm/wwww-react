@@ -13,7 +13,8 @@ export const getWeapons = (weapons) => (
     weapons.map(weapon => { 
         return new WeaponModel({
             ...weapon.attributes,
-            id: weapon.id
+            id: weapon.id,
+            imageUrl: weapon.attributes.tag
         });
     })
 )

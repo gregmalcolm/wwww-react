@@ -10,8 +10,23 @@ class WeaponModel {
         this._damage = attr.damage;
         this._range = attr.range;
         this._weight = attr.weight;
-        this._imageUrl = attr.tag;
+        this._imageUrl = attr.imageUrl;
         this._enchanted = attr.enchanted || false;
+    }
+
+    attributes() {
+        return {
+            id: this._id,
+            name: this._name,
+            category: this._category,
+            subcategory: this._subcategory,
+            cost: this._cost,
+            damage: this._damage,
+            range: this._range,
+            weight: this._weight,
+            imageUrl: this._imageUrl,
+            enchanted: this._enchanted
+        }
     }
 
     get id() {

@@ -59,8 +59,8 @@ const mapDispatchToProps = dispatch => ({
     onChangePage(history, page) { 
         dispatch(changePage(history, page))
     },
-    onToggleEnchantment(weapon) {
-        dispatch(toggleEnchantment())
+    onToggleEnchantment(weaponId, enchanted) {
+        dispatch(toggleEnchantment(weaponId, enchanted))
     }
 });
 
