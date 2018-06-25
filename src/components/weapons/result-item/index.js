@@ -16,7 +16,7 @@ const WeaponsResultsItem = ({weapon, onToggleEnchantment}) => (
                         className="enchantment-checkbox" 
                         type="checkbox"
                         defaultChecked={weapon.enchanted}
-                        onChange={(e) => onToggleEnchantment(e, weapon) }
+                        onChange={(e) => onToggleEnchantment(weapon) }
                     />
                         
                 </label>

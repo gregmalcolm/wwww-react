@@ -3,10 +3,10 @@ import React  from 'react';
 
 import './styles.css';
 
-const WeaponsPagination = ({paginationInfo, location, onChangePage}) => {
+const WeaponsPagination = ({paginationInfo, history, onChangePage}) => {
     const query = () => {
         const qs = require('query-string');
-        return qs.parse(location.search) || {};
+        return qs.parse(history.location.search) || {};
     };
 
     const searchText = query().q || "";   
@@ -24,13 +24,13 @@ const WeaponsPagination = ({paginationInfo, location, onChangePage}) => {
             <div className="btn-group page-buttons">
                 <button className={`btn btn-prev ${btnPrevDisabled}`}
                     disabled={!paginationInfo.hasPrev}
-                    onClick={()=>onChangePage(page - 1)}
+                    onClick={()=>onChangePage(history, page - 1)}
                 >
                     <img src="/images/prev.png" alt="prev" />
                 </button>
                 <button className={`btn btn-next ${btnNextDisabled}`} 
                     disabled={!paginationInfo.hasNext}
-                    onClick={()=>onChangePage(page + 1)}
+                    onClick={()=>onChangePage(history, page + 1)}
                 >
                     <img src="/images/next.png" alt="next" />
                 </button>
@@ -41,7 +41,7 @@ const WeaponsPagination = ({paginationInfo, location, onChangePage}) => {
 }
 WeaponsPagination.propTypes = {
     paginationInfo: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
     onChangePage: PropTypes.func.isRequired
 }
 

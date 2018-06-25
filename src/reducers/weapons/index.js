@@ -4,7 +4,10 @@ import { getWeapons, getPaginationInfo } from '../../helpers/weapons/serializati
 
 const weaponsReducer = (state = {}, action={ type: null }) => {
     switch (action.type) {
+        case WeaponsAction.CHANGING_PAGE:
+            return { isLoading: true};
         case WeaponsAction.FETCHED_WEAPONS:
+        case WeaponsAction.CHANGED_PAGE:
             return {
                 isLoading: false,
                 weapons: getWeapons(action.data),

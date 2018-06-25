@@ -11,7 +11,7 @@ const WeaponsResults = (props) => {
     const renderResults = ({
         weapons, 
         paginationInfo, 
-        location, 
+        history,
         onChangePage, 
         onToggleEnchantment
     }) => (
@@ -19,7 +19,7 @@ const WeaponsResults = (props) => {
             <header className="weapons-header">
                 <WeaponsPagination 
                     paginationInfo={paginationInfo}                 
-                    location={location}
+                    history={history}
                     onChangePage={onChangePage}
                 />
             </header>
@@ -34,7 +34,7 @@ const WeaponsResults = (props) => {
             <footer className="weapons-footer">
                 <WeaponsPagination 
                     paginationInfo={paginationInfo}
-                    location={location}
+                    history={history}
                     onChangePage={onChangePage}
                     />
             </footer>
@@ -58,7 +58,7 @@ const WeaponsResults = (props) => {
 WeaponsResults.propTypes = {
     weapons: PropTypes.array.isRequired,
     paginationInfo: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
     onChangePage: PropTypes.func.isRequired,
     onToggleEnchantment: PropTypes.func.isRequired
 }

@@ -3,8 +3,11 @@ const queryString = search => {
     return qs.parse(search) || {};
 };
 
-export const buildParams = search => {
-    const params = queryString(search);
+export const buildParams = (search, modifications) => {
+    const params = { 
+        ...queryString(search),
+        ...modifications
+    }
     const query = [];
     if (params.q) {
         query.push(`like_name=${params.q}`);
